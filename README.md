@@ -75,7 +75,7 @@ Creates a new connection
 ```shell script
 hoauth setup [clientName]
 # for instance
-hoauth setup xero
+hoauth setup hike
 ```
 
 This will guide you through setting up a new client configuration.
@@ -88,7 +88,7 @@ Adds a scope to an existing client configuration
 ```shell script
 hoauth setup add-scope [clientName] [scopeName...]
 # for instance
-hoauth setup add-scope xero accounting.transactions.read files.read
+hoauth setup add-scope hike accounting.transactions.read files.read
 ```
 
 #### remove-scope
@@ -98,7 +98,7 @@ Removes a scope from a client configuration
 ```shell script
 hoauth setup remove-scope [clientName] [scopeName...]
 # for instance
-hoauth setup remove-scope xero accounting.transactions.read files.read
+hoauth setup remove-scope hike accounting.transactions.read files.read
 ```
 
 #### update-secret
@@ -108,7 +108,7 @@ Replaces the client secret, which is stored in your OS keychain
 ```shell script
 hoauth setup update-secret [clientName] [secret]
 # for instance
-hoauth setup update-secret xero itsasecret!
+hoauth setup update-secret hike itsasecret!
 ```
 
 ### List
@@ -143,7 +143,7 @@ Starts the authorisation flow for a given client configuration
 ```shell script
 hoauth connect [clientName]
 # for instance
-hoauth connect xero
+hoauth connect hike
 ```
 
 ##### Flags
@@ -152,14 +152,14 @@ hoauth connect xero
 
 ```shell script
 # for instance
-hoauth connect xero --port 8080
+hoauth connect hike --port 8080
 ```
 
 `--dry-run`, `-d` - Output the Authorisation Request URL, without opening a browser window or listening for the callback
 
 ```shell script
 # for instance
-hoauth connect xero --dry-run
+hoauth connect hike --dry-run
 ```
 
 ### Token
@@ -175,7 +175,7 @@ hoauth token [clientName]
 `--refresh`, `-r' - Force a refresh of the access token
 ```shell script
 # for instance
-hoauth token xero --refresh
+hoauth token hike --refresh
 ```
 
 `--env`, `-e` - Export the tokens to the environment. By convention, these will be exported in an uppercase format.
@@ -188,8 +188,8 @@ hoauth token xero --refresh
 
 ```shell script
 # for instance
-eval "$(hoauth token xero --env)"
-echo $XERO_ACCESS_TOKEN
+eval "$(hoauth token hike --env)"
+echo $HIKE_ACCESS_TOKEN
 ```
 
 ## Global configuration
@@ -220,7 +220,7 @@ $HOME/.hoauth/hoauth.json
 You may want to delete this file if problems persist.
 
 #### Entries in the OS Keychain
-Client secrets are saved as application passwords under the common name `com.xero.hoauth`
+Client secrets are saved as application passwords under the common name `igitur.hoauth`
 
 
 ## Contributing

@@ -10,7 +10,7 @@ import (
 
 func ValidateSecretCmdArgs(cmd *cobra.Command, args []string) error {
 	if len(args) < 1 {
-		return errors.New("please supply a client name, e.g, `xero`")
+		return errors.New("please supply a client name, e.g, `hike`")
 	}
 
 	if len(args) < 2 {
