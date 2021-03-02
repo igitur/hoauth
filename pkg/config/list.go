@@ -6,8 +6,8 @@ import (
 	"os"
 	"strings"
 
-	"github.com/XeroAPI/xoauth/pkg/db"
 	"github.com/gookit/color"
+	"github.com/igitur/hoauth/pkg/db"
 )
 
 func MaskString(input string) string {

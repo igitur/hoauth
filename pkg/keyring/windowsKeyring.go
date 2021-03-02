@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/XeroAPI/xoauth/pkg/oidc"
+	"github.com/igitur/hoauth/pkg/oidc"
 	"github.com/pkg/errors"
 	"github.com/zalando/go-keyring"
 )

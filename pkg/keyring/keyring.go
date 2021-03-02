@@ -1,8 +1,8 @@
 package keyring
 
-import "github.com/XeroAPI/xoauth/pkg/oidc"
+import "github.com/igitur/hoauth/pkg/oidc"
 
-const KeyRingServiceName = "com.xero.xoauth"
+const KeyRingServiceName = "igitur.hoauth"
 
 type KeyRingService interface {
 	Set(item string, value string) error

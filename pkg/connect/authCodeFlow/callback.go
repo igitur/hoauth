@@ -9,8 +9,8 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/XeroAPI/xoauth/pkg/oidc"
 	"github.com/gookit/color"
+	"github.com/igitur/hoauth/pkg/oidc"
 )
 
 // renderAndLogError prints the error message to the browser, then shut down the web server gracefully

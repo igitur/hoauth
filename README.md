@@ -1,10 +1,10 @@
-# XOAuth
+# HOAuth
 
 > Get OpenId Connect tokens from the command line
 
-![A demo of XOAuth in a terminal window](docs/demo.gif)
+![A demo of HOAuth in a terminal window](docs/demo.gif)
 
-XOAuth provides a simple way to interact with OpenId Connect identity providers from your local CLI. Many OIDC providers only support the Authorisation Code grant - and that means running a local web server to receive the authorisation response, or using something like [Postman](https://www.postman.com/). These can be tricky to fit into a scripted workflow in a shell.
+HOAuth provides a simple way to interact with OpenId Connect identity providers from your local CLI. Many OIDC providers only support the Authorisation Code grant - and that means running a local web server to receive the authorisation response, or using something like [Postman](https://www.postman.com/). These can be tricky to fit into a scripted workflow in a shell.
 
 This tool saves you time, by:
 * Helping you configure clients and manage scopes
@@ -21,36 +21,36 @@ This tool saves you time, by:
 
 ## Installation
 Download the binary for your platform:
-* [Linux](https://github.com/XeroAPI/xoauth/releases/download/v1.1.0/xoauth_1.1.0_linux_amd64.tar.gz)
-* [Mac OS](https://github.com/XeroAPI/xoauth/releases/download/v1.1.0/xoauth_1.1.0_darwin_amd64.tar.gz)
-* [Windows](https://github.com/XeroAPI/xoauth/releases/download/v1.1.0/xoauth_1.1.0_windows_amd64.tar.gz)
+* [Linux](https://github.com/igitur/hoauth/releases/download/v1.1.0/hoauth_1.1.0_linux_amd64.tar.gz)
+* [Mac OS](https://github.com/igitur/hoauth/releases/download/v1.1.0/hoauth_1.1.0_darwin_amd64.tar.gz)
+* [Windows](https://github.com/igitur/hoauth/releases/download/v1.1.0/hoauth_1.1.0_windows_amd64.tar.gz)
 
 You can run the binary directly:
 ```sh
-./xoauth
+./hoauth
 ```
 
 Or add it to your OS `PATH`:
 
 ### Mac/Linux
 ```sh
-mv xoauth /usr/local/bin/xoauth && chmod +x /usr/local/bin/xoauth
+mv hoauth /usr/local/bin/hoauth && chmod +x /usr/local/bin/hoauth
 ```
 
 Alternatively you can use `brew` on Mac OS:
 
 ```
 brew tap xeroapi/homebrew-taps
-brew install xoauth
+brew install hoauth
 ```
 
 ### Windows
 
-The easiest way to get started on Windows is to use [scoop](https://scoop.sh/) to install xoauth:
+The easiest way to get started on Windows is to use [scoop](https://scoop.sh/) to install hoauth:
 
 ```sh
 scoop bucket add xeroapi https://github.com/XeroAPI/scoop-bucket.git
-scoop install xoauth
+scoop install hoauth
 ```
 
 ## Quick start
@@ -62,8 +62,8 @@ scoop install xoauth
 Once the tool is installed, and you have configured your client with the OpenId Provider, run these two commands to receive an access token on your command line:
 
 ```shell script
-xoauth setup [clientName]
-xoauth connect [clientName]
+hoauth setup [clientName]
+hoauth connect [clientName]
 ```
 
 ## Command reference
@@ -73,9 +73,9 @@ xoauth connect [clientName]
 Creates a new connection
 
 ```shell script
-xoauth setup [clientName]
+hoauth setup [clientName]
 # for instance
-xoauth setup xero
+hoauth setup xero
 ```
 
 This will guide you through setting up a new client configuration.
@@ -86,9 +86,9 @@ This will guide you through setting up a new client configuration.
 Adds a scope to an existing client configuration
 
 ```shell script
-xoauth setup add-scope [clientName] [scopeName...]
+hoauth setup add-scope [clientName] [scopeName...]
 # for instance
-xoauth setup add-scope xero accounting.transactions.read files.read
+hoauth setup add-scope xero accounting.transactions.read files.read
 ```
 
 #### remove-scope
@@ -96,9 +96,9 @@ xoauth setup add-scope xero accounting.transactions.read files.read
 Removes a scope from a client configuration
 
 ```shell script
-xoauth setup remove-scope [clientName] [scopeName...]
+hoauth setup remove-scope [clientName] [scopeName...]
 # for instance
-xoauth setup remove-scope xero accounting.transactions.read files.read
+hoauth setup remove-scope xero accounting.transactions.read files.read
 ```
 
 #### update-secret
@@ -106,9 +106,9 @@ xoauth setup remove-scope xero accounting.transactions.read files.read
 Replaces the client secret, which is stored in your OS keychain
 
 ```shell script
-xoauth setup update-secret [clientName] [secret]
+hoauth setup update-secret [clientName] [secret]
 # for instance
-xoauth setup update-secret xero itsasecret!
+hoauth setup update-secret xero itsasecret!
 ```
 
 ### List
@@ -116,7 +116,7 @@ xoauth setup update-secret xero itsasecret!
 Lists all the connections you have created
 
 ```shell script
-xoauth list
+hoauth list
 ```
 
 ##### Flags
@@ -124,7 +124,7 @@ xoauth list
 `--secrets`, `-s` - Includes the client secrets in the output (disabled by default)
 
 ```shell script
-xoauth list --secrets
+hoauth list --secrets
 ```
 
 
@@ -133,7 +133,7 @@ xoauth list --secrets
 Deletes a given client configuration (with a prompt to confirm, we're not barbarians)
 
 ```shell script
-xoauth delete [clientName]
+hoauth delete [clientName]
 ```
 
 ### Connect
@@ -141,9 +141,9 @@ xoauth delete [clientName]
 Starts the authorisation flow for a given client configuration
 
 ```shell script
-xoauth connect [clientName]
+hoauth connect [clientName]
 # for instance
-xoauth connect xero
+hoauth connect xero
 ```
 
 ##### Flags
@@ -152,14 +152,14 @@ xoauth connect xero
 
 ```shell script
 # for instance
-xoauth connect xero --port 8080
+hoauth connect xero --port 8080
 ```
 
 `--dry-run`, `-d` - Output the Authorisation Request URL, without opening a browser window or listening for the callback
 
 ```shell script
 # for instance
-xoauth connect xero --dry-run
+hoauth connect xero --dry-run
 ```
 
 ### Token
@@ -167,7 +167,7 @@ xoauth connect xero --dry-run
 Output the last set of tokens that were retrieved by the `connect` command
 
 ```shell script
-xoauth token [clientName]
+hoauth token [clientName]
 ```
 
 ##### Flags
@@ -175,7 +175,7 @@ xoauth token [clientName]
 `--refresh`, `-r' - Force a refresh of the access token
 ```shell script
 # for instance
-xoauth token xero --refresh
+hoauth token xero --refresh
 ```
 
 `--env`, `-e` - Export the tokens to the environment. By convention, these will be exported in an uppercase format.
@@ -188,7 +188,7 @@ xoauth token xero --refresh
 
 ```shell script
 # for instance
-eval "$(xoauth token xero --env)"
+eval "$(hoauth token xero --env)"
 echo $XERO_ACCESS_TOKEN
 ```
 
@@ -196,11 +196,11 @@ echo $XERO_ACCESS_TOKEN
 
 ### Changing the default web server port
 
-You can modify the default web server port by setting the `XOAUTH_PORT` environment variable:
+You can modify the default web server port by setting the `HOAUTH_PORT` environment variable:
 
 ```shell script
 # for instance
-XOAUTH_PORT=9999 xoauth setup
+HOAUTH_PORT=9999 hoauth setup
 ```
 
 ## Troubleshooting
@@ -208,19 +208,19 @@ XOAUTH_PORT=9999 xoauth setup
 Run the doctor command to check for common problems:
 
 ```shell script
-xoauth doctor
+hoauth doctor
 ```
 
-xoauth stores client configuration in a JSON file at the following location:
+hoauth stores client configuration in a JSON file at the following location:
 
 ```shell script
-$HOME/.xoauth/xoauth.json
+$HOME/.hoauth/hoauth.json
 ```
 
 You may want to delete this file if problems persist.
 
 #### Entries in the OS Keychain
-Client secrets are saved as application passwords under the common name `com.xero.xoauth`
+Client secrets are saved as application passwords under the common name `com.xero.hoauth`
 
 
 ## Contributing

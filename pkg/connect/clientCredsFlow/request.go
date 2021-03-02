@@ -7,9 +7,9 @@ import (
 	"os"
 	"strings"
 
-	"github.com/XeroAPI/xoauth/pkg/db"
-	"github.com/XeroAPI/xoauth/pkg/oidc"
 	"github.com/gookit/color"
+	"github.com/igitur/hoauth/pkg/db"
+	"github.com/igitur/hoauth/pkg/oidc"
 )
 
 type ClientCredsFlowInteractor struct {

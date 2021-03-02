@@ -4,8 +4,8 @@ import (
 	"log"
 
 	"github.com/AlecAivazis/survey/v2"
-	"github.com/XeroAPI/xoauth/pkg/db"
 	"github.com/gookit/color"
+	"github.com/igitur/hoauth/pkg/db"
 )
 
 func ChooseClient(database *db.CredentialStore) (string, error) {
@@ -17,7 +17,7 @@ func ChooseClient(database *db.CredentialStore) (string, error) {
 
 	if len(allClients) == 0 {
 		log.Fatalf("Please create a connection using `%s`",
-			color.Green.Sprintf("xoauth setup [connectionName]"))
+			color.Green.Sprintf("hoauth setup [connectionName]"))
 	}
 
 	var connections []string

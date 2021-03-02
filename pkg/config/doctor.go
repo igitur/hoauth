@@ -5,8 +5,8 @@ import (
 	"log"
 	"net"
 
-	"github.com/XeroAPI/xoauth/pkg/db"
-	"github.com/XeroAPI/xoauth/pkg/oidc"
+	"github.com/igitur/hoauth/pkg/db"
+	"github.com/igitur/hoauth/pkg/oidc"
 )
 
 func portFree(portNumber int) error {
@@ -35,7 +35,7 @@ func Doctor(database *db.CredentialStore, port int) {
 		log.Fatalf("crypto error: %v", prngErr)
 	}
 
-	// Check we can access ~/.xoauth
+	// Check we can access ~/.hoauth
 	dbErr := database.EnsureDbExists()
 
 	if dbErr != nil {

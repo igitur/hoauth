@@ -5,8 +5,8 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/XeroAPI/xoauth/pkg/keyring"
-	"github.com/XeroAPI/xoauth/pkg/oidc"
+	"github.com/igitur/hoauth/pkg/keyring"
+	"github.com/igitur/hoauth/pkg/oidc"
 
 	"io/ioutil"
 	"log"
@@ -15,8 +15,8 @@ import (
 	"time"
 )
 
-const ConfigDirPath = ".xoauth"
-const ConfigFileName = "xoauth.json"
+const ConfigDirPath = ".hoauth"
+const ConfigFileName = "hoauth.json"
 
 type OidcClient struct {
 	Authority    string

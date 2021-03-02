@@ -3,10 +3,10 @@ package connect
 import (
 	"log"
 
-	"github.com/XeroAPI/xoauth/pkg/connect/authCodeFlow"
-	"github.com/XeroAPI/xoauth/pkg/connect/clientCredsFlow"
-	"github.com/XeroAPI/xoauth/pkg/db"
-	"github.com/XeroAPI/xoauth/pkg/oidc"
+	"github.com/igitur/hoauth/pkg/connect/authCodeFlow"
+	"github.com/igitur/hoauth/pkg/connect/clientCredsFlow"
+	"github.com/igitur/hoauth/pkg/db"
+	"github.com/igitur/hoauth/pkg/oidc"
 )
 
 func Authorise(database *db.CredentialStore, name string, operatingSystem string, dryRun bool, localHostPort int) {
@@ -23,7 +23,7 @@ func Authorise(database *db.CredentialStore, name string, operatingSystem string
 	}
 
 	if !clientExists {
-		log.Fatalf("The client %q doesn't exist. Create it using `xoauth setup`.", name)
+		log.Fatalf("The client %q doesn't exist. Create it using `hoauth setup`.", name)
 	}
 
 	var client, clientErr = database.GetClientWithSecret(allClients, name)

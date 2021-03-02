@@ -7,19 +7,19 @@ import (
 	"runtime"
 	"strconv"
 
-	"github.com/XeroAPI/xoauth/pkg/config"
-	"github.com/XeroAPI/xoauth/pkg/connect"
-	"github.com/XeroAPI/xoauth/pkg/db"
-	"github.com/XeroAPI/xoauth/pkg/keyring"
-	"github.com/XeroAPI/xoauth/pkg/tokens"
+	"github.com/igitur/hoauth/pkg/config"
+	"github.com/igitur/hoauth/pkg/connect"
+	"github.com/igitur/hoauth/pkg/db"
+	"github.com/igitur/hoauth/pkg/keyring"
+	"github.com/igitur/hoauth/pkg/tokens"
 	"github.com/spf13/cobra"
 )
 
 var rootCmd = &cobra.Command{
-	Use:   "xoauth",
-	Short: "🔒 XOAuth – Get yourself some OAuth2 tokens",
+	Use:   "hoauth",
+	Short: "🔒 HOAuth – Get yourself some OAuth2 tokens",
 	Long: `
-🔒 XOAuth
+🔒 HOAuth
 
 A tool to help you work with OpenId Connect APIs.`,
 	Run: func(cmd *cobra.Command, args []string) {
@@ -41,7 +41,7 @@ func getEnv(key, fallback string) string {
 
 func init() {
 	var fallbackPort = 8080
-	var defaultPort, portErr = strconv.Atoi(getEnv("XOAUTH_PORT", fmt.Sprintf("%d", fallbackPort)))
+	var defaultPort, portErr = strconv.Atoi(getEnv("HOAUTH_PORT", fmt.Sprintf("%d", fallbackPort)))
 
 	if portErr != nil {
 		defaultPort = fallbackPort
@@ -226,7 +226,7 @@ func init() {
 
 	var doctorCmd = &cobra.Command{
 		Use:   "doctor",
-		Short: "Checks that xoauth is configured properly",
+		Short: "Checks that hoauth is configured properly",
 		Run: func(cmd *cobra.Command, args []string) {
 			config.Doctor(database, DoctorPort)
 		},

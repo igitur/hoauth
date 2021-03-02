@@ -7,7 +7,7 @@ import (
 
 	"github.com/zalando/go-keyring"
 
-	"github.com/XeroAPI/xoauth/pkg/oidc"
+	"github.com/igitur/hoauth/pkg/oidc"
 )
 
 type UnixKeyRingService struct {

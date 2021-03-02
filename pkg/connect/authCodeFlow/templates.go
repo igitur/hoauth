@@ -1,11 +1,11 @@
 package authCodeFlow
 
 type TokenResultViewModel struct {
-	AccessToken string
+	AccessToken  string
 	RefreshToken string
-	IdToken string
-	Claims interface{}
-	Authority string
+	IdToken      string
+	Claims       interface{}
+	Authority    string
 }
 
 func TokenResultView() string {
@@ -13,7 +13,7 @@ func TokenResultView() string {
 <!doctype html>
 <html>
 	<head>
-		<title>XOAuth</title>
+		<title>HOAuth</title>
 		<style>
 			body {
 				font-family: sans-serif;

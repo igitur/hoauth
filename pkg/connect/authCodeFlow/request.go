@@ -6,10 +6,10 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/XeroAPI/xoauth/pkg/db"
-	"github.com/XeroAPI/xoauth/pkg/interop"
-	"github.com/XeroAPI/xoauth/pkg/oidc"
 	"github.com/gookit/color"
+	"github.com/igitur/hoauth/pkg/db"
+	"github.com/igitur/hoauth/pkg/interop"
+	"github.com/igitur/hoauth/pkg/oidc"
 )
 
 type CodeFlowInteractor struct {
