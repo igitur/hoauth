@@ -32,21 +32,25 @@ func Authorise(database *db.CredentialStore, name string, operatingSystem string
 		panic(clientErr)
 	}
 
-	var wellKnownConfig, wellKnownErr = oidc.GetMetadata(client.Authority)
-
-	if wellKnownErr != nil {
-		panic(wellKnownErr)
+	endPoints := oidc.EndPoints{
+		AuthorizationEndPoint: client.AuthorizationEndPoint,
+		TokenEndPoint:         client.TokenEndPoint,
 	}
+	//var wellKnownConfig, wellKnownErr = oidc.GetMetadata(client.Authority)
+
+	// if wellKnownErr != nil {
+	// 	panic(wellKnownErr)
+	// }
 
 	switch grantType := client.GrantType; grantType {
 	case oidc.PKCE:
-		interactor := authCodeFlow.NewCodeFlowInteractor(wellKnownConfig, database, operatingSystem)
+		interactor := authCodeFlow.NewCodeFlowInteractor(endPoints, database, operatingSystem)
 		interactor.RequestWithProofOfKeyExchange(client, dryRun, localHostPort)
 	case oidc.AuthorisationCode:
-		interactor := authCodeFlow.NewCodeFlowInteractor(wellKnownConfig, database, operatingSystem)
+		interactor := authCodeFlow.NewCodeFlowInteractor(endPoints, database, operatingSystem)
 		interactor.Request(client, dryRun, localHostPort)
 	case oidc.ClientCredentials:
-		interactor := clientCredsFlow.NewClientCredsFlow(wellKnownConfig, database, operatingSystem)
+		interactor := clientCredsFlow.NewClientCredsFlow(endPoints, database, operatingSystem)
 		interactor.Request(client, dryRun)
 	default:
 		log.Fatal("Unsupported grant type")

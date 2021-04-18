@@ -13,14 +13,14 @@ import (
 )
 
 type ClientCredsFlowInteractor struct {
-	wellKnownConfig oidc.WellKnownConfiguration
+	endPoints       oidc.EndPoints
 	database        *db.CredentialStore
 	operatingSystem string
 }
 
-func NewClientCredsFlow(wellKnownConfig oidc.WellKnownConfiguration, database *db.CredentialStore, operatingSystem string) ClientCredsFlowInteractor {
+func NewClientCredsFlow(endPoints oidc.EndPoints, database *db.CredentialStore, operatingSystem string) ClientCredsFlowInteractor {
 	return ClientCredsFlowInteractor{
-		wellKnownConfig: wellKnownConfig,
+		endPoints:       endPoints,
 		database:        database,
 		operatingSystem: operatingSystem,
 	}
@@ -29,7 +29,7 @@ func NewClientCredsFlow(wellKnownConfig oidc.WellKnownConfiguration, database *d
 func (interactor *ClientCredsFlowInteractor) Request(client db.OidcClient, dryRun bool) {
 	var scopes = strings.Join(client.Scopes, " ")
 
-	var tokenResult, tokenErr = oidc.RequestWithClientCredentials(interactor.wellKnownConfig.TokenEndpoint, client.ClientId, client.ClientSecret, scopes)
+	var tokenResult, tokenErr = oidc.RequestWithClientCredentials(interactor.endPoints.TokenEndPoint, client.ClientId, client.ClientSecret, scopes)
 
 	if tokenErr != nil {
 		log.Fatalln(tokenErr)
@@ -37,11 +37,11 @@ func (interactor *ClientCredsFlowInteractor) Request(client db.OidcClient, dryRu
 
 	log.Println("Validating access token")
 
-	var _, validateErr = oidc.ValidateToken(tokenResult.AccessToken, interactor.wellKnownConfig, client.ClientId)
+	//var _, validateErr = oidc.ValidateToken(tokenResult.AccessToken, interactor.endPoints, client.ClientId)
 
-	if validateErr != nil {
-		log.Fatalln(validateErr)
-	}
+	// if validateErr != nil {
+	// 	log.Fatalln(validateErr)
+	// }
 
 	jsonData, jsonErr := json.MarshalIndent(tokenResult, "", "    ")
 

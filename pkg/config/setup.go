@@ -26,7 +26,7 @@ func validateClientId(input interface{}) error {
 	return nil
 }
 
-func validateAuthority(val interface{}) error {
+func validateEndPointUri(val interface{}) error {
 	urlObj, err := url.Parse(val.(string))
 
 	if err != nil {
@@ -117,16 +117,29 @@ func InteractiveSetup(database *db.CredentialStore, clientName string, defaultPo
 		}
 	}
 
-	var authorityResult string
-	authority := &survey.Input{
-		Message: "What's the Authority?",
-		Default: "https://identity.xero.com",
+	var authorizationEndPointResult string
+	authorizationEndPoint := &survey.Input{
+		Message: "What's the authorization endpoint URI?",
+		Default: "https://api.hikeup.com/oauth/authorize",
 	}
 
-	authorityErr := survey.AskOne(authority, &authorityResult, survey.WithValidator(validateAuthority))
+	authorizationEndPointErr := survey.AskOne(authorizationEndPoint, &authorizationEndPointResult, survey.WithValidator(validateEndPointUri))
 
-	if authorityErr != nil {
-		log.Printf("Prompt failed %v\n", authorityErr)
+	if authorizationEndPointErr != nil {
+		log.Printf("Prompt failed %v\n", authorizationEndPointErr)
+		return
+	}
+
+	var tokenEndPointResult string
+	tokenEndPoint := &survey.Input{
+		Message: "What's the token endpoint URI?",
+		Default: "https://api.hikeup.com/oauth/oauth",
+	}
+
+	tokenEndPointErr := survey.AskOne(tokenEndPoint, &tokenEndPointResult, survey.WithValidator(validateEndPointUri))
+
+	if tokenEndPointErr != nil {
+		log.Printf("Prompt failed %v\n", tokenEndPointErr)
 		return
 	}
 
@@ -225,12 +238,13 @@ func InteractiveSetup(database *db.CredentialStore, clientName string, defaultPo
 	}
 
 	client := db.OidcClient{
-		Authority:   authorityResult,
-		Alias:       aliasResult,
-		GrantType:   grantTypeResult,
-		ClientId:    clientIdResult,
-		Scopes:      scopeCollection,
-		CreatedDate: time.Now(),
+		AuthorizationEndPoint: authorizationEndPointResult,
+		TokenEndPoint:         tokenEndPointResult,
+		Alias:                 aliasResult,
+		GrantType:             grantTypeResult,
+		ClientId:              clientIdResult,
+		Scopes:                scopeCollection,
+		CreatedDate:           time.Now(),
 	}
 
 	var saveErr error
@@ -241,9 +255,10 @@ func InteractiveSetup(database *db.CredentialStore, clientName string, defaultPo
 		log.Fatalf("error creating client: %v\n", saveErr)
 	}
 
-	log.Printf("✅ Saved settings for %q\n\nAuthority: %q\nClient id: %q\nGrant type: %q\nScopes: %q\n",
+	log.Printf("✅ Saved settings for %q\n\nAuthorization endpoint: %q\nToken endpoint: %q\nClient id: %q\nGrant type: %q\nScopes: %q\n",
 		client.Alias,
-		client.Authority,
+		client.AuthorizationEndPoint,
+		client.TokenEndPoint,
 		client.ClientId,
 		client.GrantType,
 		strings.Join(client.Scopes, ", "))

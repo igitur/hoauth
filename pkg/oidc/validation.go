@@ -49,7 +49,7 @@ func getKeyValidatorFunc(keys *jwk.Set) func(token *jwt.Token) (interface{}, err
 	}
 }
 
-func ValidateToken(tokenString string, configuration WellKnownConfiguration, clientId string) (interface{}, error) {
+func ValidateToken(tokenString string, configuration EndPoints, clientId string) (interface{}, error) {
 	// Allow up to five minutes of clock skew
 	var clockToleranceSeconds = 300 * time.Second
 

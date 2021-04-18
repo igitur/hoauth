@@ -28,8 +28,8 @@ type AccessTokenResultSet struct {
 	ExpiresAt   int64  `json:"expires_at"`
 }
 
-func BuildCodeAuthorisationRequest(configuration WellKnownConfiguration, clientId string, redirectUri string, scopes []string, state string, codeChallenge string) string {
-	urlToBuild, urlErr := url.Parse(configuration.AuthorisationEndpoint)
+func BuildCodeAuthorisationRequest(configuration EndPoints, clientId string, redirectUri string, scopes []string, state string, codeChallenge string) string {
+	urlToBuild, urlErr := url.Parse(configuration.AuthorizationEndPoint)
 
 	if urlErr != nil {
 		log.Fatal(urlErr)

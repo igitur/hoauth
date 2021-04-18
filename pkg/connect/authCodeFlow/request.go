@@ -13,14 +13,14 @@ import (
 )
 
 type CodeFlowInteractor struct {
-	wellKnownConfig oidc.WellKnownConfiguration
+	endPoints       oidc.EndPoints
 	database        *db.CredentialStore
 	operatingSystem string
 }
 
-func NewCodeFlowInteractor(wellKnownConfig oidc.WellKnownConfiguration, database *db.CredentialStore, operatingSystem string) CodeFlowInteractor {
+func NewCodeFlowInteractor(endPoints oidc.EndPoints, database *db.CredentialStore, operatingSystem string) CodeFlowInteractor {
 	return CodeFlowInteractor{
-		wellKnownConfig: wellKnownConfig,
+		endPoints:       endPoints,
 		database:        database,
 		operatingSystem: operatingSystem,
 	}
@@ -49,7 +49,7 @@ func (interactor *CodeFlowInteractor) initRequest(client db.OidcClient, codeVeri
 	}
 
 	authorisationUrl := oidc.BuildCodeAuthorisationRequest(
-		interactor.wellKnownConfig,
+		interactor.endPoints,
 		client.ClientId,
 		redirectUri,
 		client.Scopes,

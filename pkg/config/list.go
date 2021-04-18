@@ -48,7 +48,8 @@ func print_info(value db.OidcClient, clientSecret string) {
 		color.Cyan.Sprintf(value.ClientId),
 		color.Cyan.Sprintf(value.GrantType),
 		color.Cyan.Sprintf(clientSecret),
-		color.Yellow.Sprintf(value.Authority),
+		color.Yellow.Sprintf(value.AuthorizationEndPoint),
+		color.Yellow.Sprintf(value.TokenEndPoint),
 		strings.Join(value.Scopes, "\n  • "),
 	)
 }

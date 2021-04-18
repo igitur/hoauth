@@ -19,13 +19,14 @@ const ConfigDirPath = ".hoauth"
 const ConfigFileName = "hoauth.json"
 
 type OidcClient struct {
-	Authority    string
-	Alias        string
-	GrantType    string
-	ClientId     string
-	ClientSecret string
-	CreatedDate  time.Time
-	Scopes       []string
+	AuthorizationEndPoint string
+	TokenEndPoint         string
+	Alias                 string
+	GrantType             string
+	ClientId              string
+	ClientSecret          string
+	CreatedDate           time.Time
+	Scopes                []string
 }
 
 type CredentialStore struct {

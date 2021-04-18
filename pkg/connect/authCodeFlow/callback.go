@@ -49,7 +49,7 @@ func (interactor *CodeFlowInteractor) handleOidcCallback(
 
 	log.Println("Received OIDC response")
 
-	var result, codeExchangeErr = oidc.ExchangeCodeForToken(interactor.wellKnownConfig.TokenEndpoint, authorisationResponse.Code, clientId, clientSecret, codeVerifier, redirectUri)
+	var result, codeExchangeErr = oidc.ExchangeCodeForToken(interactor.endPoints.TokenEndPoint, authorisationResponse.Code, clientId, clientSecret, codeVerifier, redirectUri)
 
 	if codeExchangeErr != nil {
 		renderAndLogError(w, cancel, fmt.Sprintf("%v", codeExchangeErr))
@@ -58,12 +58,12 @@ func (interactor *CodeFlowInteractor) handleOidcCallback(
 
 	log.Println("Validating token")
 
-	var claims, validateErr = oidc.ValidateToken(result.IdentityToken, interactor.wellKnownConfig, clientId)
+	// var claims, validateErr = oidc.ValidateToken(result.IdentityToken, interactor.endPoints, clientId)
 
-	if validateErr != nil {
-		renderAndLogError(w, cancel, fmt.Sprintf("%v", validateErr))
-		return
-	}
+	// if validateErr != nil {
+	// 	renderAndLogError(w, cancel, fmt.Sprintf("%v", validateErr))
+	// 	return
+	// }
 
 	t := template.New("credentials")
 	_, parseErr := t.Parse(TokenResultView())
@@ -78,7 +78,7 @@ func (interactor *CodeFlowInteractor) handleOidcCallback(
 		RefreshToken: result.RefreshToken,
 		IdToken:      result.IdentityToken,
 		Claims:       claims,
-		Authority:    interactor.wellKnownConfig.Issuer,
+		//Authority:    interactor.endPoints.Issuer,
 	}
 
 	tplErr := t.Execute(w, viewModel)

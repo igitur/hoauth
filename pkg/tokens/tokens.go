@@ -28,7 +28,7 @@ func ShowTokens(database *db.CredentialStore, clientName string, exportToEnv boo
 	if tokenSet.ExpiresAt <= time.Now().Unix() || forceRefresh {
 		var err error
 
-		tokenSet, err = Refresh(database, clientName, tokenSet)
+		//tokenSet, err = Refresh(database, clientName, tokenSet)
 
 		if err != nil {
 			log.Fatalln(err)
@@ -74,49 +74,49 @@ func PrintJson(tokenSet oidc.TokenResultSet) {
 	fmt.Fprintf(os.Stdout, "%s", tokenSerialised)
 }
 
-func Refresh(database *db.CredentialStore, clientName string, tokenSet oidc.TokenResultSet) (oidc.TokenResultSet, error) {
-	allClients, allClientsErr := database.GetClients()
-	if allClientsErr != nil {
-		log.Fatalln(allClientsErr)
-	}
+// func Refresh(database *db.CredentialStore, clientName string, tokenSet oidc.TokenResultSet) (oidc.TokenResultSet, error) {
+// 	allClients, allClientsErr := database.GetClients()
+// 	if allClientsErr != nil {
+// 		log.Fatalln(allClientsErr)
+// 	}
 
-	clientConfig, err := database.GetClientWithSecret(allClients, clientName)
+// 	clientConfig, err := database.GetClientWithSecret(allClients, clientName)
 
-	if err != nil {
-		return tokenSet, err
-	}
+// 	if err != nil {
+// 		return tokenSet, err
+// 	}
 
-	if tokenSet.RefreshToken == "" {
-		log.Fatalln("No refresh token is present in the saved credentials - unable to perform a refresh")
-	}
+// 	if tokenSet.RefreshToken == "" {
+// 		log.Fatalln("No refresh token is present in the saved credentials - unable to perform a refresh")
+// 	}
 
-	refreshResult, refreshErr := oidc.RefreshToken(clientConfig.Authority,
-		clientConfig.ClientId,
-		clientConfig.ClientSecret,
-		tokenSet.RefreshToken,
-	)
+// 	refreshResult, refreshErr := oidc.RefreshToken(clientConfig.Authority,
+// 		clientConfig.ClientId,
+// 		clientConfig.ClientSecret,
+// 		tokenSet.RefreshToken,
+// 	)
 
-	if refreshErr != nil {
-		return tokenSet, refreshErr
-	}
+// 	if refreshErr != nil {
+// 		return tokenSet, refreshErr
+// 	}
 
-	tokenSet.RefreshToken = refreshResult.RefreshToken
-	tokenSet.AccessToken = refreshResult.AccessToken
-	tokenSet.ExpiresIn = refreshResult.ExpiresIn
-	tokenSet.ExpiresAt = oidc.AbsoluteExpiry(time.Now(), refreshResult.ExpiresIn)
+// 	tokenSet.RefreshToken = refreshResult.RefreshToken
+// 	tokenSet.AccessToken = refreshResult.AccessToken
+// 	tokenSet.ExpiresIn = refreshResult.ExpiresIn
+// 	tokenSet.ExpiresAt = oidc.AbsoluteExpiry(time.Now(), refreshResult.ExpiresIn)
 
-	_, saveErr := database.SaveTokens(clientName, oidc.TokenResultSet{
-		RefreshToken: refreshResult.RefreshToken,
-		AccessToken:  refreshResult.AccessToken,
-		ExpiresAt:    tokenSet.ExpiresAt,
-	})
+// 	_, saveErr := database.SaveTokens(clientName, oidc.TokenResultSet{
+// 		RefreshToken: refreshResult.RefreshToken,
+// 		AccessToken:  refreshResult.AccessToken,
+// 		ExpiresAt:    tokenSet.ExpiresAt,
+// 	})
 
-	if saveErr != nil {
-		return tokenSet, saveErr
-	}
+// 	if saveErr != nil {
+// 		return tokenSet, saveErr
+// 	}
 
-	return tokenSet, nil
-}
+// 	return tokenSet, nil
+// }
 
 func CleanTokens(database *db.CredentialStore, clientName string) error {
 	exists, existsErr := database.ClientExists(clientName)
